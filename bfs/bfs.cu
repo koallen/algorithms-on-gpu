@@ -6,6 +6,10 @@
 
 #include "bfs.cuh"
 
+#define BLOCK_SIZE 256
+
+__global__ void cudaBfsKernel(int *, int *, int *, int *, int *, int);
+
 int emptyFrontier(int *F, int vertexCount)
 {
 	for (int i = 0; i < vertexCount; ++i)
@@ -47,7 +51,6 @@ void cudaBfs(int *V, int *E, int *C, int vertexCount, int edgeCount, int source)
 		cudaBfsKernel<<<grid, block>>>(V_d, E_d, F_d, X_d, C_d, vertexCount);
 		cudaDeviceSynchronize();
 		cudaMemcpy(F, F_d, sizeof(int) * vertexCount, cudaMemcpyDeviceToHost);
-		cudaMemcpy(X, X_d, sizeof(int) * vertexCount, cudaMemcpyDeviceToHost);
 	} while (!emptyFrontier(F, vertexCount));
 
 	cudaMemcpy(C, C_d, sizeof(int) * vertexCount, cudaMemcpyDeviceToHost);

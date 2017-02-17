@@ -1,8 +1,9 @@
+#ifndef BFS_HEADER
+#define BFS_HEADER
+
 #include <limits>
+#define INF std::numeric_limits<int>::max()
 
-#define MAX_INT std::numeric_limits<int>::max()
-#define BLOCK_SIZE 256
-
-int emptyFrontier(int *, int);
 void cudaBfs(int *, int *, int *, int, int, int);
-__global__ void cudaBfsKernel(int *, int *, int *, int *, int *, int);
+
+#endif
